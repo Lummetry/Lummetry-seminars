@@ -23,6 +23,9 @@ def cnn_backbone(inputs, cnns):
   return tf_inp, cnn_feats
     
 def TextRCNN1(inputs, lstm_size=1024, cnns=[(32,1), (32,3), (64,5), (128,7)]):
+  """
+  slowest - uses a big LSTM on the concatenated grams
+  """
   tf_input, cnn_feats = cnn_backbone(inputs=inputs, cnns=cnns)
 
   tf_x = tf.keras.layers.concatenate(cnn_feats)
@@ -34,6 +37,9 @@ def TextRCNN1(inputs, lstm_size=1024, cnns=[(32,1), (32,3), (64,5), (128,7)]):
   return model
   
 def TextRCNN2(inputs, lstm_size=256, cnns=[(32,1), (32,3), (64,5), (128,7)]):
+  """
+  average - uses concatenated grams but also analyzes multiple lenghts by stacking RNNs
+  """
   tf_input, cnn_feats = cnn_backbone(inputs=inputs, cnns=cnns)
 
   tf_x = tf.keras.layers.concatenate(cnn_feats)
@@ -49,6 +55,10 @@ def TextRCNN2(inputs, lstm_size=256, cnns=[(32,1), (32,3), (64,5), (128,7)]):
 
 
 def TextRCNN3(inputs, lstm_size=256, cnns=[(32,1), (32,3), (64,5), (128,7)]):
+  """
+  fast - here we analyze the intuition of having a rnn analyze a whole sequence of grams
+         and only then concatenate multiple types of grams results
+  """
   tf_input, cnn_feats = cnn_backbone(inputs=inputs, cnns=cnns)
 
   rcnns = []
