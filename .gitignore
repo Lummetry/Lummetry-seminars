@@ -2,3 +2,8 @@
 .spyproject/
 
 AE/MNIST/
+01_AEs/MNIST/raw/
+
+01_AEs/.ipynb_checkpoints/
+
+04_Basic_RL/REINFOCE_PPO/__pycache__/
